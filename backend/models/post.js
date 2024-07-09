@@ -5,7 +5,7 @@ const PostSchema = new Schema({
     title: String,
     date: { type: Date, default: Date.now },
     body: String,
-    comments: [{ type: mongoose.ObjectId, ref: "Comment" }]
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }]
 });
 
 PostSchema.virtual("url").get(() => `/post/${this._id}`);
