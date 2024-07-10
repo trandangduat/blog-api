@@ -5,8 +5,15 @@ import './App.css'
 function App() {
   const [posts, setPosts] = useState(null);
   useEffect(() => {
-    fetch("http://localhost:3000/api/posts")
-    .then(res => res.json())
+    fetch("/api/posts")
+    .then(res => {
+      if (res.status == 401) {
+        console.log(res.statusText);
+        setPosts([]);
+        return;
+      }
+      return res.json()
+    })
     .then(res => {
       setPosts(res.all_posts);
     })
