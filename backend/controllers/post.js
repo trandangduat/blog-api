@@ -1,5 +1,5 @@
 const Post = require("../models/post");
-const authenticateToken = require("../authenticate");
+const authenticateToken = require("../middlewares/authenticate");
 
 exports.posts_list = [
     authenticateToken,
