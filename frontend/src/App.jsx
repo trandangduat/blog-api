@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 import './App.css'
 
 function App() {
@@ -14,23 +15,15 @@ function App() {
   
   return (
     <>
+    <Link to="login">Login</Link>
+    <Link to="signup">Sign up</Link>
     {posts ? (posts.map(post => {
       return (
         <div key= {post}>
         <p>{post.title}</p>
         <span>{post.date}</span>
         <p>{post.body}</p>
-        <ul>
-        {post.comments.map(cmt => {
-          return (
-            <li key={cmt}>
-              <p>{cmt.user.username}</p>
-              <p>{cmt.body}</p>
-              <span>{cmt.date}</span>
-            </li>
-          );
-        })}
-        </ul>
+        <Link to={post.url}>Read more...</Link>
         </div>
       );
     })) : (<p>Loading...</p>)}

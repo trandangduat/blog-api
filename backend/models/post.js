@@ -6,8 +6,12 @@ const PostSchema = new Schema({
     date: { type: Date, default: Date.now },
     body: String,
     comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }]
+}, {
+    toJSON: {virtuals: true}
 });
 
-PostSchema.virtual("url").get(() => `/post/${this._id}`);
+PostSchema.virtual("url").get(function() {
+    return `/post/${this._id}`
+});
 
 module.exports = mongoose.model("Post", PostSchema);
