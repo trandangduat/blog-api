@@ -19,14 +19,14 @@ exports.login = [
             const user = await User.findOne({ username });
             if (!user) {
                 res.status(401).send({ 
-                    msg: "No matching username."
+                    data_error: "No matching username."
                 });
                 return;
             }
             const isPasswordMatched = await bcrypt.compare(password, user.password);
             if (!isPasswordMatched) {
                 res.status(401).send({ 
-                    msg: "Wrong password."
+                    data_error: "Wrong password."
                 });
                 return;
             }
