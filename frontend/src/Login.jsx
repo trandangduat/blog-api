@@ -1,21 +1,26 @@
 import { useState } from "react";
+import { useAuth } from "./AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [validationResults, setValidationResults] = useState([]);
     const [dataError, setDataError] = useState('');
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
         fetch("/api/login", {
             method: "POST",
-            body: JSON.stringify({
-                username, password
-            }),
             headers: {
                 "Content-Type": "application/json",
             },
+            body: JSON.stringify({
+                username,
+                password
+            }),
         })
         .then(res => res.json())
         .then(res => {
@@ -26,7 +31,8 @@ const Login = () => {
                 setDataError('');
                 setValidationResults(res.errors);
             } else {
-                console.log(res.token);
+                login(res.token);
+                navigate('/');
             }
         });
     };

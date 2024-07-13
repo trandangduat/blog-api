@@ -1,27 +1,28 @@
+import { createRoutesFromElements, Route } from "react-router-dom";
 import App from "./App"
-import DefaultProfile from "./DefaultProfile";
 import ErrorPage from "./ErrorPage";
 import Login from "./Login";
 import SignUp from "./SignUp";
+import { AuthProvider } from "./AuthContext";
+import { Logout } from "./Logout";
 
-const routes = [
-  {
-    path: "/",
-    element: <App />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/login",
-    element: <Login />
-  },
-  {
-    path: "/signup",
-    element: <SignUp />
-  },
-  {
-    path: "/post/:id",
-    element: <DefaultProfile />
-  }
-];
+const routes = createRoutesFromElements(
+  <Route element={<AuthProvider />}>
+    <Route path="/" element={<App />} errorElement={<ErrorPage />}>
+      <Route 
+        path="login"
+        element={<Login />}
+      />
+      <Route
+        path="signup"
+        element={<SignUp />}
+      />
+      <Route
+        path="logout"
+        element={<Logout />}
+      />
+    </Route>
+  </Route>
+);
 
 export default routes;

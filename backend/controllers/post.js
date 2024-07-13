@@ -1,8 +1,6 @@
 const Post = require("../models/post");
-const authenticateToken = require("../middlewares/authenticate");
 
 exports.posts_list = [
-    authenticateToken,
     async (req, res) => {
         const all_posts = await Post.find().exec();
         res.send({
