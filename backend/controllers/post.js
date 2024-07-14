@@ -1,4 +1,5 @@
 const Post = require("../models/post");
+const { body, validationResult } = require("express-validator");
 
 exports.posts_list = [
     async (req, res) => {
@@ -7,5 +8,10 @@ exports.posts_list = [
             all_posts: Array.from(all_posts),
             user: req.user
         });
+    }
+];
+
+exports.new_post = [
+    async (req, res) => {
     }
 ];

@@ -5,6 +5,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import { AuthProvider } from "./AuthContext";
 import { Logout } from "./Logout";
+import NewPost from "./NewPost";
 
 const routes = createRoutesFromElements(
   <Route element={<AuthProvider />}>
@@ -20,6 +21,10 @@ const routes = createRoutesFromElements(
       <Route
         path="logout"
         element={<Logout />}
+      />
+      <Route
+        path="post/newpost"
+        element={<NewPost />}
       />
     </Route>
   </Route>
