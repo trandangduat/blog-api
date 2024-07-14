@@ -13,5 +13,14 @@ exports.posts_list = [
 
 exports.new_post = [
     async (req, res) => {
+        const { title, body } = req.body;
+        const post = new Post({
+            title,
+            body,
+        });
+        await post.save();
+        res.send({
+            msg: "POST CREATED!"
+        });
     }
 ];
