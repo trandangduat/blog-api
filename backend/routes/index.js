@@ -8,5 +8,6 @@ router.get('/post/:id', PostController.post_details);
 router.get('/post/:id/comments', PostController.post_comments);
 router.get('/protected', ProtectedController.display_protected_message);
 router.post('/post/create', PostController.new_post);
+router.post('/post/:id/comment/create', PostController.new_comment);
 
 module.exports = router;

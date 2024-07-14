@@ -56,3 +56,20 @@ exports.post_comments = [
         });
     }
 ];
+
+exports.new_comment = [
+    async (req, res) => {
+        const post = await Post.findById(req.params.id).exec();
+        const comment = new Comment({
+            post,
+            user: req.body.userId,
+            body: req.body.commentBody
+        });
+        await comment.save();
+        post.comments.push(comment);
+        await post.save();
+        res.send({
+            msg: "COMMENT CREATED"
+        });
+    }
+];
