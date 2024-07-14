@@ -1,4 +1,6 @@
 const Post = require("../models/post");
+const Comment = require("../models/comment");
+const User = require("../models/user");
 const { body, validationResult } = require("express-validator");
 
 exports.posts_list = [
@@ -21,6 +23,36 @@ exports.new_post = [
         await post.save();
         res.send({
             msg: "POST CREATED!"
+        });
+    }
+];
+
+exports.post_details = [
+    async (req, res) => {
+        const post = await Post.findById(req.params.id).exec();
+        const { title, date, body } = post;
+        res.send({
+            title,
+            body,
+            date
+        });
+    }
+];
+
+exports.post_comments = [
+    async (req, res) => {
+        const post = await Post.findById(req.params.id)
+                               .populate({
+                                    path: 'comments',
+                                    populate: {
+                                        path: 'user',
+                                        select: '-password'
+                                    }
+                               })
+                               .exec();
+        const { comments } = post;
+        res.send({
+            comments
         });
     }
 ];
