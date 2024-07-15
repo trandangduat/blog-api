@@ -9,6 +9,7 @@ export const Post = () => {
 
     const [commentsList, setCommentsList] = useState(null);
     const [commentValue, setCommentValue] = useState('');
+    const [commentsRerender, setCommentsRerender] = useState(0);
     
     useEffect(() => {
         fetch(`/api/post/${postId}`)
@@ -24,9 +25,9 @@ export const Post = () => {
         fetch(`/api/post/${postId}/comments`)
             .then(response => response.json())
             .then(response => {
-                setCommentsList(response.comments);
+                setCommentsList(response.comments.reverse());
             })
-    }, [postId]);
+    }, [postId, commentsRerender]);
 
     const handleCommentSubmit = (event) => {
         event.preventDefault();
@@ -41,16 +42,19 @@ export const Post = () => {
             })
         })
             .then(response => response.json())
-            .then(response => console.log(response));
-        setCommentValue('');
+            .then(response => {
+                console.log(response);
+                setCommentValue('');
+                setCommentsRerender(prev => prev + 1);
+            });
     };
 
     return (
         <>
             <h1>{title}</h1>
+            <span>{date}</span>
             <hr></hr>
 
-            <span>{date}</span>
             <div 
                 dangerouslySetInnerHTML={{__html: body}}
             ></div>
@@ -75,8 +79,8 @@ export const Post = () => {
                 {commentsList && (
                     <div>
                         {commentsList.map((cmt) => (
-                            <div key={cmt}>
-                                <p>{cmt.user.username}</p>
+                            <div key={cmt.date}>
+                                <p><strong>{cmt.user.username}</strong></p>
                                 <p>{cmt.date}</p>
                                 <p>{cmt.body}</p>
                             </div>
