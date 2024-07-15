@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
 export const Post = () => {
     const { id: postId } = useParams();
@@ -10,6 +11,8 @@ export const Post = () => {
     const [commentsList, setCommentsList] = useState(null);
     const [commentValue, setCommentValue] = useState('');
     const [commentsRerender, setCommentsRerender] = useState(0);
+
+    const { user } = useAuth();
     
     useEffect(() => {
         fetch(`/api/post/${postId}`)
@@ -31,16 +34,18 @@ export const Post = () => {
 
     const handleCommentSubmit = (event) => {
         event.preventDefault();
-        fetch(`/api/post/${postId}/comment/create`, {
+
+        const options = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                userId: '668e2e603a400204c3c11ae3',
+                userId: user._id,
                 commentBody: commentValue,
             })
-        })
+        }
+        fetch(`/api/post/${postId}/comment/create`, options)
             .then(response => response.json())
             .then(response => {
                 console.log(response);

@@ -12,6 +12,7 @@ async function main() {
 const indexRouter = require("./routes/index");
 const loginRouter = require("./routes/login");
 const signupRouter = require("./routes/signup");
+const userRouter = require("./routes/user");
 const app = express();
 
 app.use(cors());
@@ -20,5 +21,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api', indexRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/signup', signupRouter)
+app.use('/api/user', userRouter);
 
 app.listen(3000, () => console.log("Listening on port 3000!"));

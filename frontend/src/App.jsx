@@ -3,7 +3,7 @@ import './App.css'
 import { useAuth } from "./AuthContext";
 
 const App = () => {
-  const { isAuthenticated } = useAuth();
+  const { user, isAuthenticated } = useAuth();
 
   return (
     <>
@@ -16,6 +16,7 @@ const App = () => {
         </>
       ) : (
         <>
+          <p>Hello, {user && user.username}</p>
           <Link to="logout">Logout</Link>
         </>
       )}
