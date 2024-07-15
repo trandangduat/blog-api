@@ -7,10 +7,15 @@ import { AuthProvider } from "./AuthContext";
 import { Logout } from "./Logout";
 import NewPost from "./NewPost";
 import { Post } from "./Post";
+import { Index } from "./Index";
 
 const routes = createRoutesFromElements(
   <Route element={<AuthProvider />}>
     <Route path="/" element={<App />} errorElement={<ErrorPage />}>
+      <Route
+        index="true"
+        element={<Index />}
+      />
       <Route 
         path="login"
         element={<Login />}
