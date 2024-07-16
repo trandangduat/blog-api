@@ -1,27 +1,14 @@
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import './App.css'
-import { useAuth } from "./AuthContext";
+import { NavBar } from "./components/Navbar";
 
 const App = () => {
-  const { user, isAuthenticated } = useAuth();
-
   return (
     <>
-      <nav>
-      <Link to="/">Home</Link>
-      { !isAuthenticated ? (
-        <>
-          <Link to="login">Login</Link>
-          <Link to="signup">Sign up</Link>
-        </>
-      ) : (
-        <>
-          <p>Hello, {user && user.username}</p>
-          <Link to="logout">Logout</Link>
-        </>
-      )}
-      </nav>
-      <Outlet />
+      <NavBar />
+      <div className="container max-w-5xl mx-auto pt-24">
+        <Outlet />
+      </div>
     </>
   );
 }
