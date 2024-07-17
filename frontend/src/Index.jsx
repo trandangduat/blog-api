@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import noImageSrc from "./assets/no_image.png";
+import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/outline"
 
 const shortenText = (text) => {
     const MAX_LENGTH = 200;
@@ -40,7 +41,7 @@ export const Index = () => {
     return (
         <>
             {posts && (
-                <div className="flex flex-col space-y-10">
+                <div className="flex flex-col gap-8">
                     {posts.map((post) => (
                         <PostCard 
                             key={post.date}
@@ -50,7 +51,7 @@ export const Index = () => {
                             previewImage={post.previewImage}
                             url={`/post/${post._id}`}
                             commentsCount={post.commentsCount}
-                        ></PostCard>
+                        />
                     ))}
                 </div>
             )}
@@ -60,7 +61,7 @@ export const Index = () => {
 
 const PostCard = ({ title, date, previewBody, previewImage, url, commentsCount }) => {
     return (
-        <div className="flex space-x-6 border border-slate-200 rounded-md p-5">
+        <div className="flex gap-6 border border-slate-200 rounded-md p-5">
             <div className="bg-slate-100 border border-slate-200 rounded-md flex-none overflow-hidden w-52 h-52">
                 <img 
                     src={previewImage} 
@@ -82,10 +83,21 @@ const PostCard = ({ title, date, previewBody, previewImage, url, commentsCount }
                         {previewBody}
                     </p>
                 </section>
-                <footer className="text-slate-700">
-                    <div className="">{commentsCount} comments</div>
+                <footer className="text-slate-700 flex">
+                    <PostStatistic
+                        count={commentsCount}
+                    />
                 </footer>
             </div>
+        </div>
+    );
+}
+
+const PostStatistic = ({ count }) => {
+    return (
+        <div className="flex items-center gap-2 border px-3 py-1 rounded-md border-slate-400">
+            <ChatBubbleBottomCenterTextIcon className="size-5" />
+            <div className="">{count}</div>
         </div>
     );
 
