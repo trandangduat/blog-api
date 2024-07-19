@@ -1,10 +1,11 @@
-import { Editor } from '@tinymce/tinymce-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { marked } from 'marked';
 
 const NewPost = () => {
     const [value, setValue] = useState('');
     const [title, setTitle] = useState('');
+    const [preview, setPreview] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = (event) => {
@@ -24,37 +25,38 @@ const NewPost = () => {
         navigate('/');
     };
 
+    const handleContentChange = (event) => {
+        const content = event.target.value;
+        setValue(content);
+        setPreview(marked(content));
+    };
+
     return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="post-title">Title:</label>
+        <div className="flex flex-row h-screen w-screen text-slate-900 overflow-hidden">
+            <form className="flex flex-col w-1/2 p-4" onSubmit={handleSubmit}>
+                <label htmlFor="post-title" className="block">Title:</label>
                 <input 
+                    className="w-full border border-slate-400 rounded-lg p-2 mb-4"
                     type="text" 
                     name="post-title" 
                     value={title}
                     onChange={(event) => setTitle(event.target.value)}
-                ></input>
-                <Editor
-                    apiKey='4bgjuunumyvar6lgmxiqg9p9q90weh7llz2ciy1htrjxt5z9'
-                    value={value}
-                    onEditorChange={(newValue, editor) => setValue(newValue)}
-                    init={{
-                        height: 500,
-                        menubar: false,
-                        plugins: [
-                            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                            'insertdatetime', 'media', 'table', 'help', 'wordcount'
-                        ],
-                        toolbar: 'undo redo | blocks | ' +
-                            'bold italic underline | bullist numlist outdent indent | image link ' +
-                            'removeformat | help',
-                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }',
-                    }}
+                    required
                 />
-                <button type="submit">Submit</button>
+                <textarea 
+                    className="flex-1 border border-slate-400 rounded-lg overflow-auto p-4 resize-none"
+                    value={value}
+                    onChange={handleContentChange}
+                />
+                <button type="submit" className="mt-4 bg-blue-500 text-white p-2 rounded-lg">Submit</button>
             </form>
-        </>
+            <section className="w-1/2 p-4">
+                <article
+                    className="max-w-none h-full w-full overflow-auto border border-slate-400 rounded-lg p-4 prose prose-slate"
+                    dangerouslySetInnerHTML={{__html: preview}}
+                />
+            </section>
+        </div>
     );
 };
 

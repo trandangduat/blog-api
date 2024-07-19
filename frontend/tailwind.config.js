@@ -9,10 +9,13 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ["Inter Variable", ...defaultTheme.fontFamily.sans]
+        'sans': ["Inter Variable", ...defaultTheme.fontFamily.sans],
+        'serif': ["Playfair Display Variable", ...defaultTheme.fontFamily.serif]
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'), 
+  ],
 }
 
