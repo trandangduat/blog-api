@@ -33,12 +33,12 @@ const routes = createRoutesFromElements(
           path=":id"
           element={<Post />}
         />
-        <Route 
-          path="newpost"
-          element={<NewPost />}
-        />
       </Route>
     </Route>
+    <Route 
+      path="newpost"
+      element={<NewPost />}
+    />
   </Route>
 );
 
