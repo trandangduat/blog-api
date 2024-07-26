@@ -16,5 +16,8 @@
     img {
       @apply rounded-md shadow-md shadow-slate-400
     }
+    .anchor-heading {
+      @apply no-underline absolute block font-mono -left-7 text-slate-300 hover:text-slate-900
+    }
   }
 }

@@ -69,7 +69,7 @@ export const Post = () => {
     return (
         <section className="">
             <header className="mb-20 text-center">
-                <h1 className="leading-tight text-5xl font-serif font-semibold text-slate-900 my-4">{title}</h1>
+                <h1 className="leading-tight text-4xl font-serif font-semibold text-slate-900 my-4">{title}</h1>
                 <div className="text-sm text-slate-700">
                     <span className="">{date}</span>
                 </div>

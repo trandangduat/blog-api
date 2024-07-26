@@ -2,6 +2,22 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { marked } from 'marked';
 
+const convertMarkdownToHTML = (content) => {
+    const renderer = {
+        heading(text, depth) {
+            const escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
+            return `
+                <h${depth} class="relative">
+                    <a class="anchor-heading" id="#${escapedText}" href="#${escapedText}">#</a>
+                    ${text}
+                </h${depth}>
+            `;
+        }
+    };
+    marked.use({ renderer });
+    return marked.parse(content);
+};
+
 const NewPost = () => {
     const [value, setValue] = useState('');
     const [title, setTitle] = useState('');
@@ -21,14 +37,16 @@ const NewPost = () => {
             })
         })
             .then(response => response.json())
-            .then(response => console.log(response));
-        navigate('/');
+            .then(response => {
+                console.log(response);
+                return navigate('/');
+            });
     };
 
     const handleContentChange = (event) => {
         const content = event.target.value;
         setValue(content);
-        setPreview(marked(content));
+        setPreview(convertMarkdownToHTML(content));
     };
 
     return (
@@ -52,7 +70,7 @@ const NewPost = () => {
             </form>
             <section className="w-1/2 p-4">
                 <article
-                    className="max-w-none h-full w-full overflow-auto border border-slate-400 rounded-lg p-4 prose prose-slate"
+                    className="max-w-none h-full w-full overflow-auto border border-slate-400 rounded-lg px-10 py-4 prose prose-slate"
                     dangerouslySetInnerHTML={{__html: preview}}
                 />
             </section>
