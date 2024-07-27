@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.0.19",
-    "@fontsource-variable/playfair-display": "^5.0.25",
+    "@fontsource-variable/lora": "^5.0.18",
     "@heroicons/react": "^2.1.5",
     "@react-spring/web": "^9.7.4",
     "@tinymce/tinymce-react": "^5.1.1",

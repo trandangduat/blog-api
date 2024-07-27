@@ -4,7 +4,7 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import routes from './routes'
 import '@fontsource-variable/inter'
-import '@fontsource-variable/playfair-display'
+import '@fontsource-variable/lora';
 
 const router = createBrowserRouter(routes);
 

@@ -13,11 +13,8 @@
     @apply text-lg;
   }
   article {
-    img {
-      @apply rounded-md shadow-md shadow-slate-400
-    }
     .anchor-heading {
-      @apply absolute top-0 left-0 -translate-x-full pr-2 no-underline
+      @apply absolute top-0 left-0 -translate-x-full pr-2 no-underline scroll-mt-32
     }
     .anchor-heading span {
       @apply opacity-0 group-hover:opacity-100 transition text-slate-300 hover:text-slate-900

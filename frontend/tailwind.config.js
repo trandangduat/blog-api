@@ -10,7 +10,7 @@ export default {
     extend: {
       fontFamily: {
         'sans': ["Inter Variable", ...defaultTheme.fontFamily.sans],
-        'serif': ["Playfair Display Variable", ...defaultTheme.fontFamily.serif]
+        'serif': ["Lora Variable", ...defaultTheme.fontFamily.serif]
       }
     },
   },

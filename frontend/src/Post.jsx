@@ -68,22 +68,9 @@ export const Post = () => {
 
     return (
         <section className="">
-            <header className="mb-20 text-center">
-                <h1 className="leading-tight text-4xl font-serif font-semibold text-slate-900 my-4">{title}</h1>
-                <div className="text-sm text-slate-700">
-                    <span className="">{date}</span>
-                </div>
-            </header>
-            
-            <div className="flex justify-between gap-6">
-                <div className="flex-1">
-                    <article
-                        className="prose prose-slate max-w-3xl"
-                        dangerouslySetInnerHTML={{__html: body}}
-                    />
-                </div>
+            <div className="flex justify-around">
                 <div className="w-auto">
-                    <aside className="flex flex-col gap-4 sticky top-1/4 text-slate-900">
+                    <aside className="flex flex-col gap-4 sticky top-32 text-slate-900">
                         <SidebarItem 
                             count={"TOC"}
                             icon={<Bars3BottomLeftIcon />}
@@ -98,6 +85,18 @@ export const Post = () => {
                             onClick={showDrawer}
                         />
                     </aside>
+                </div>
+                <div className="flex-1 max-w-3xl">
+                    <header className="mb-20">
+                        <h1 className="leading-tight text-4xl font-serif font-text-slate-900 my-4">{title}</h1>
+                        <div className="text-sm text-slate-700">
+                            <span className="">{date}</span>
+                        </div>
+                    </header>
+                    <article
+                        className="prose prose-slate max-w-3xl prose-img:rounded-xl prose-h1:text-3xl"
+                        dangerouslySetInnerHTML={{__html: body}}
+                    />
                 </div>
             </div>
             <Drawer
