@@ -2,22 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { marked } from 'marked';
 
-const convertMarkdownToHTML = (content) => {
-    const renderer = {
-        heading(text, depth) {
-            const escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
-            return `
-                <h${depth} class="relative">
-                    <a class="anchor-heading" id="#${escapedText}" href="#${escapedText}">#</a>
-                    ${text}
-                </h${depth}>
-            `;
-        }
-    };
-    marked.use({ renderer });
-    return marked.parse(content);
-};
-
 const NewPost = () => {
     const [value, setValue] = useState('');
     const [title, setTitle] = useState('');
@@ -46,7 +30,7 @@ const NewPost = () => {
     const handleContentChange = (event) => {
         const content = event.target.value;
         setValue(content);
-        setPreview(convertMarkdownToHTML(content));
+        setPreview(marked.parse(content));
     };
 
     return (

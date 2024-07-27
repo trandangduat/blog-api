@@ -6,8 +6,8 @@ import {
     HeartIcon, 
     Bars3BottomLeftIcon 
 } from "@heroicons/react/24/outline";
-import { marked } from "marked";
 import { Drawer } from "./components/Drawer";
+import { convertMarkdownToHTML } from "./markdownUtils";
 
 export const Post = () => {
     const { id: postId } = useParams();
@@ -31,7 +31,7 @@ export const Post = () => {
             .then(response => response.json())
             .then(response => {
                 setTitle(response.title);
-                setBody(marked.parse(response.body));
+                setBody(convertMarkdownToHTML(response.body));
                 setDate(response.date);
             })
     }, [postId]);
@@ -111,9 +111,6 @@ export const Post = () => {
                     handleCommentSubmit={handleCommentSubmit}
                 />
             </Drawer>
-
-            <footer className="hidden">
-            </footer>
         </section>
     );
 };
