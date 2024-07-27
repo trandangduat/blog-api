@@ -7,7 +7,8 @@ import {
     Bars3BottomLeftIcon 
 } from "@heroicons/react/24/outline";
 import { Drawer } from "./components/Drawer";
-import { convertMarkdownToHTML } from "./markdownUtils";
+import { convertMarkdownToHTML, exportHeadingsFromMarkdown } from "./markdownUtils";
+import { Popup } from "./components/Popup";
 
 export const Post = () => {
     const { id: postId } = useParams();
@@ -19,6 +20,8 @@ export const Post = () => {
     const [commentsList, setCommentsList] = useState(null);
     const [commentValue, setCommentValue] = useState('');
     const [commentsRerender, setCommentsRerender] = useState(0);
+
+    const [headings, setHeadings] = useState(null);
 
     const { user } = useAuth();
 
@@ -32,6 +35,7 @@ export const Post = () => {
             .then(response => {
                 setTitle(response.title);
                 setBody(convertMarkdownToHTML(response.body));
+                setHeadings(exportHeadingsFromMarkdown(response.body));
                 setDate(response.date);
             })
     }, [postId]);
@@ -69,7 +73,7 @@ export const Post = () => {
     return (
         <section className="">
             <div className="flex justify-around">
-                <div className="w-auto">
+                <div className="w-auto z-10">
                     <aside className="flex flex-col gap-4 sticky top-32 text-slate-900">
                         <SidebarItem 
                             count={"TOC"}
@@ -84,9 +88,14 @@ export const Post = () => {
                             icon={<ChatBubbleBottomCenterTextIcon />}
                             onClick={showDrawer}
                         />
+                        <Popup>
+                            <TableOfContent
+                                headings={headings}
+                            />
+                        </Popup>
                     </aside>
                 </div>
-                <div className="flex-1 max-w-3xl">
+                <div className="flex-1 max-w-3xl z-0">
                     <header className="mb-20">
                         <h1 className="leading-tight text-4xl font-serif font-text-slate-900 my-4">{title}</h1>
                         <div className="text-sm text-slate-700">
@@ -113,6 +122,46 @@ export const Post = () => {
         </section>
     );
 };
+
+const TableOfContent = ({ headings }) => {
+    return (
+        <div className="overflow-hidden">
+            <div className="flex flex-col">
+                {headings && (
+                    <>
+                        {headings.map(heading => (
+                            <TOCHeading
+                                key={heading.url}
+                                heading={heading}
+                            />
+                        ))}
+                    </>
+                )}
+            </div>
+        </div>
+    );
+}
+
+const TOCHeading = ({ heading }) => {
+    const marginClasses = [
+        'ml-0',
+        'ml-4',
+        'ml-8',
+    ];
+    return (
+        <a href={heading.url}>
+            <span 
+                className={`
+                    block 
+                    font-semibold text-slate-500 hover:text-slate-900
+                    ${marginClasses[heading.depth - 1]}
+                `}
+            >
+                {heading.text}
+            </span>
+        </a>
+    );
+}
 
 const CommentSection = ({ commentsList, commentValue, setCommentValue, handleCommentSubmit }) => {
     return (
