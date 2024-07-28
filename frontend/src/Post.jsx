@@ -154,15 +154,17 @@ const TableOfContent = ({ headings }) => {
 const TOCHeading = ({ heading }) => {
     const marginClasses = [
         'ml-0',
-        'ml-4',
         'ml-8',
+        'ml-12',
     ];
     return (
         <a href={heading.url}>
             <span 
                 className={`
                     block 
-                    font-semibold text-slate-500 hover:text-slate-900
+                    font-semibold text-slate-600 hover:text-slate-900
+                    px-4 py-1
+                    ${heading.depth == 1 ? "" : "border-l-2 border-l-slate-200"}
                     ${marginClasses[heading.depth - 1]}
                 `}
             >

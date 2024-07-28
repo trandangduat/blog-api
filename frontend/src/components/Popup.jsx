@@ -43,7 +43,7 @@ export const Popup = ({ children, isVisible }) => {
                     ...popupAnimation,
                 }}
             >
-                <div className="py-6 px-8 w-full">
+                <div className="py-4 px-6 w-full">
                     {children}
                 </div>
             </animated.div>
