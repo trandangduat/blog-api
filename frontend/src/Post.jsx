@@ -100,6 +100,7 @@ export const Post = () => {
                         >
                             <TableOfContent
                                 headings={headings}
+                                setTOCPopupVisibility={setTOCPopupVisibility}
                             />
                         </Popup>
                     </aside>
@@ -132,7 +133,7 @@ export const Post = () => {
     );
 };
 
-const TableOfContent = ({ headings }) => {
+const TableOfContent = ({ headings, setTOCPopupVisibility }) => {
     return (
         <div className="overflow-hidden">
             <div className="flex flex-col">
@@ -142,6 +143,7 @@ const TableOfContent = ({ headings }) => {
                             <TOCHeading
                                 key={heading.url}
                                 heading={heading}
+                                setTOCPopupVisibility={setTOCPopupVisibility}
                             />
                         ))}
                     </>
@@ -151,14 +153,17 @@ const TableOfContent = ({ headings }) => {
     );
 }
 
-const TOCHeading = ({ heading }) => {
+const TOCHeading = ({ heading, setTOCPopupVisibility }) => {
     const marginClasses = [
         'ml-0',
         'ml-8',
         'ml-12',
     ];
     return (
-        <a href={heading.url}>
+        <a 
+            href={heading.url}
+            onClick={() => setTOCPopupVisibility(false)}
+        >
             <span 
                 className={`
                     block 
