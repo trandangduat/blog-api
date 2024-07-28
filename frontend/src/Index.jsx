@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import noImageSrc from "./assets/no_image.png";
 import { ChatBubbleBottomCenterTextIcon, HeartIcon } from "@heroicons/react/24/outline"
+import dayjs from "dayjs"
 
 const shortenText = (text) => {
     const MAX_LENGTH = 200;
@@ -33,6 +34,7 @@ export const Index = () => {
                     post.body = text;
                     post.previewImage = image;
                     post.commentsCount = post.comments.length;
+                    post.formattedDate = dayjs(post.date).format("MMM DD, YYYY");
                 });
                 setPosts(all_posts.reverse());
             });
@@ -46,7 +48,7 @@ export const Index = () => {
                         <PostCard 
                             key={post.date}
                             title={post.title}
-                            date={post.date}
+                            date={post.formattedDate}
                             previewBody={post.body}
                             previewImage={post.previewImage}
                             url={`/post/${post._id}`}

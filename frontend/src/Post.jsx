@@ -9,6 +9,10 @@ import {
 import { Drawer } from "./components/Drawer";
 import { convertMarkdownToHTML, exportHeadingsFromMarkdown } from "./markdownUtils";
 import { Popup } from "./components/Popup";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 
 export const Post = () => {
     const { id: postId } = useParams();
@@ -37,11 +41,12 @@ export const Post = () => {
     useEffect(() => {
         fetch(`/api/post/${postId}`)
             .then(response => response.json())
-            .then(response => {
-                setTitle(response.title);
-                setBody(convertMarkdownToHTML(response.body));
-                setHeadings(exportHeadingsFromMarkdown(response.body));
-                setDate(response.date);
+            .then(data => {
+                setTitle(data.title);
+                data.date = dayjs(data.date).format("MMM DD, YYYY");
+                setDate(data.date);
+                setBody(convertMarkdownToHTML(data.body));
+                setHeadings(exportHeadingsFromMarkdown(data.body));
             })
     }, [postId]);
 
@@ -190,7 +195,7 @@ const CommentSection = ({ commentsList, commentValue, setCommentValue, handleCom
                             <Comment 
                                 key={cmt.date}
                                 username={cmt.user.username}
-                                date={cmt.date}
+                                date={dayjs(cmt.date).fromNow()}
                                 body={cmt.body}
                             />
                         ))}
