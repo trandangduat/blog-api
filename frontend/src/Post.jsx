@@ -22,11 +22,16 @@ export const Post = () => {
     const [commentsRerender, setCommentsRerender] = useState(0);
 
     const [headings, setHeadings] = useState(null);
+    const [TOCPopupVisibility, setTOCPopupVisibility] = useState(false);
 
     const { user } = useAuth();
 
     const showDrawer = (event) => {
         setDrawerVisibility(true);
+    }
+
+    const toggleTOCPopup = (event) => {
+        setTOCPopupVisibility(state => !state);
     }
     
     useEffect(() => {
@@ -78,6 +83,7 @@ export const Post = () => {
                         <SidebarItem 
                             count={"TOC"}
                             icon={<Bars3BottomLeftIcon />}
+                            onClick={toggleTOCPopup}
                         />
                         <SidebarItem 
                             count={420}
@@ -88,7 +94,10 @@ export const Post = () => {
                             icon={<ChatBubbleBottomCenterTextIcon />}
                             onClick={showDrawer}
                         />
-                        <Popup>
+                        <Popup
+                            isVisible={TOCPopupVisibility}
+                            setIsVisible={setTOCPopupVisibility}
+                        >
                             <TableOfContent
                                 headings={headings}
                             />
