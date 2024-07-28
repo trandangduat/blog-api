@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import noImageSrc from "./assets/no_image.png";
-import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/outline"
+import { ChatBubbleBottomCenterTextIcon, HeartIcon } from "@heroicons/react/24/outline"
 
 const shortenText = (text) => {
     const MAX_LENGTH = 200;
@@ -61,7 +61,7 @@ export const Index = () => {
 
 const PostCard = ({ title, date, previewBody, previewImage, url, commentsCount }) => {
     return (
-        <div className="flex gap-6 border border-slate-200 rounded-md p-5">
+        <div className="flex gap-6 border bg-white/50 backdrop-blur-md border-slate-200 rounded-lg p-5">
             <div className="bg-slate-100 border border-slate-200 rounded-md flex-none overflow-hidden w-52 h-52">
                 <img 
                     src={previewImage} 
@@ -83,8 +83,13 @@ const PostCard = ({ title, date, previewBody, previewImage, url, commentsCount }
                         {previewBody}
                     </p>
                 </section>
-                <footer className="text-slate-700 flex">
+                <footer className="text-slate-700 flex gap-3">
                     <PostStatistic
+                        icon={<HeartIcon />}
+                        count={420}
+                    />
+                    <PostStatistic
+                        icon={<ChatBubbleBottomCenterTextIcon />}
                         count={commentsCount}
                     />
                 </footer>
@@ -93,10 +98,10 @@ const PostCard = ({ title, date, previewBody, previewImage, url, commentsCount }
     );
 }
 
-const PostStatistic = ({ count }) => {
+const PostStatistic = ({ icon, count }) => {
     return (
-        <div className="flex items-center gap-2 border px-3 py-1 rounded-md border-slate-400">
-            <ChatBubbleBottomCenterTextIcon className="size-5" />
+        <div className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold bg-slate-200/50">
+            <span className="size-5">{icon}</span>
             <div className="">{count}</div>
         </div>
     );
