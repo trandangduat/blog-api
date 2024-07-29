@@ -54,7 +54,7 @@ export const Drawer = ({ children, isVisible, setIsVisible }) => {
             </animated.div>
             <animated.div 
                 className={`
-                    bg-white rounded-t-xl overflow-auto 
+                    bg-white dark:bg-slate-800 rounded-t-xl overflow-auto 
                     mx-auto max-w-4xl h-5/6 fixed left-0 right-0
                 `}
                 style={{

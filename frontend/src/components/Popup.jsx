@@ -36,7 +36,7 @@ export const Popup = ({ children, isVisible }) => {
         >
             <animated.div 
                 className={`
-                    bg-white/75 border-2 border-slate-200 backdrop-blur-md rounded-xl
+                    bg-white/75 dark:bg-slate-800/75 border-2 border-slate-200 dark:border-slate-50/[0.06] backdrop-blur-md rounded-xl
                     overflow-auto max-w-md
                 `}
                 style={{

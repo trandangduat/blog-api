@@ -43,7 +43,7 @@ export const Footer = () => {
 
 const SocialButton = ({ link, children }) => {
     return (
-        <a href={link} className="text-slate-600 hover:text-slate-900">
+        <a href={link} className="text-slate-600 hover:text-slate-900 dark:hover:text-slate-500">
             <div className="">{children}</div>
         </a>
     );
