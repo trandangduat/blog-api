@@ -3,9 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply bg-[url('/public/beam.svg')] bg-no-repeat bg-top bg-contain 
-  }
   h1 {
     @apply text-2xl;
   }
