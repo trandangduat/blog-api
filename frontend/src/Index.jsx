@@ -63,7 +63,7 @@ export const Index = () => {
 
 const PostCard = ({ title, date, previewBody, previewImage, url, commentsCount }) => {
     return (
-        <div className="flex gap-6 border bg-white/50 dark:bg-slate-900/50 backdrop-blur-md border-slate-200 dark:border-slate-50/[0.06] rounded-lg p-5">
+        <div className="flex gap-6 border bg-white/50 dark:bg-slate-800/20 backdrop-blur-3xl border-slate-200 dark:border-slate-50/5 rounded-lg p-5">
             <div className="bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-50/[0.06] rounded-md flex-none overflow-hidden w-52 h-52">
                 <img 
                     src={previewImage} 
