@@ -63,7 +63,7 @@ export const Index = () => {
 
 const PostCard = ({ title, date, previewBody, previewImage, url, commentsCount }) => {
     return (
-        <div className="flex gap-6 border bg-white/50 dark:bg-slate-800/20 backdrop-blur-3xl border-slate-200 dark:border-slate-50/5 rounded-lg p-5">
+        <div className="flex gap-6 border bg-white/50 dark:bg-slate-800/20 backdrop-blur-3xl border-slate-200 dark:border-slate-50/10 rounded-lg p-5">
             <div className="bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-50/[0.06] rounded-md flex-none overflow-hidden w-52 h-52">
                 <img 
                     src={previewImage} 
@@ -78,14 +78,14 @@ const PostCard = ({ title, date, previewBody, previewImage, url, commentsCount }
                     </span>
                 </header>
                 <section>
-                    <h1 className="font-bold text-slate-900 dark:text-slate-300 my-4 hover:text-slate-700 dark:hover:text-slate-200">
+                    <h1 className="font-bold text-slate-900 dark:text-slate-200 my-4 hover:text-slate-700 dark:hover:text-slate-50">
                         <Link to={url}>{title}</Link>
                     </h1>
                     <p className="text-sm text-wrap text-slate-700 dark:text-slate-400 mb-4">
                         {previewBody}
                     </p>
                 </section>
-                <footer className="text-slate-700 dark:text-slate-400 flex gap-3">
+                <footer className="flex gap-3">
                     <PostStatistic
                         icon={<HeartIcon />}
                         count={420}
@@ -102,7 +102,7 @@ const PostCard = ({ title, date, previewBody, previewImage, url, commentsCount }
 
 const PostStatistic = ({ icon, count }) => {
     return (
-        <div className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold bg-slate-200/50 dark:bg-slate-800/50">
+        <div className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold text-slate-700 dark:text-slate-300  bg-slate-200/50 dark:bg-slate-800">
             <span className="size-5">{icon}</span>
             <div className="">{count}</div>
         </div>
