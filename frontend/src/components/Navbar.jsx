@@ -1,27 +1,29 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../AuthContext";
-import { MoonIcon } from "@heroicons/react/24/solid";
-import { useEffect } from "react";
-
-const toggleTheme = () => {
-    document.body.classList.toggle("dark");
-    if (localStorage.getItem("theme") === "dark") {
-        localStorage.setItem("theme", "light");
-    } else {
-        localStorage.setItem("theme", "dark");
-    }
-};
+import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
+import { useEffect, useState } from "react";
 
 export const NavBar = () => {
     const { user, isAuthenticated } = useAuth();
+    const [preferedTheme, setPreferedTheme] = useState( localStorage.getItem("theme") || "dark" );
 
     useEffect(() => {
-        if (localStorage.getItem("theme") === "dark") {
-            document.body.classList.add("dark");
-        } else {
+        if (localStorage.getItem("theme") === "light") {
             document.body.classList.remove("dark");
+        } else {
+            document.body.classList.add("dark");
         }
     }, []);
+
+    const toggleTheme = () => {
+        setPreferedTheme(theme => (theme === "dark"? "light" : "dark"));
+        document.body.classList.toggle("dark");
+        if (localStorage.getItem("theme") === "light") {
+            localStorage.setItem("theme", "dark");
+        } else {
+            localStorage.setItem("theme", "light");
+        }
+    };
 
     return (
         <nav className="fixed top-4 left-0 right-0 z-50">
@@ -30,7 +32,16 @@ export const NavBar = () => {
                     <NavItem link="/" label="Home"></NavItem>
                 </div>
                 <div className="flex items-center">
-                    <NavItem link="#" label={<MoonIcon className="w-5 h-5" />} onClick={toggleTheme} />
+                    <NavItem 
+                        link="#" 
+                        label={
+                            preferedTheme === "dark" ? 
+                            (<MoonIcon className="w-5 h-5" />) 
+                            : 
+                            (<SunIcon className="w-5 h-5" />)
+                        } 
+                        onClick={toggleTheme} 
+                    />
                     { !isAuthenticated ? (
                         <>
                             <NavItem link="login" label="Login"></NavItem>
