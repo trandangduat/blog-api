@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import noImageSrc from "./assets/no_image.png";
 import { ChatBubbleBottomCenterTextIcon, HeartIcon } from "@heroicons/react/24/outline"
 import dayjs from "dayjs"
+import { LightBall } from "./components/LightBall";
+import { useMouseTracker } from "./App";
 
 const shortenText = (text) => {
     const MAX_LENGTH = 200;
@@ -62,8 +64,13 @@ export const Index = () => {
 }
 
 const PostCard = ({ title, date, previewBody, previewImage, url, commentsCount }) => {
+    const cardRef = useRef(null);
+    const mousePos = useMouseTracker();
+    const {x: cardX, y: cardY} = (cardRef.current ? cardRef.current.getBoundingClientRect() : {x: 0, y: 0});
+    
     return (
-        <div className="flex gap-6 border bg-white/50 dark:bg-slate-800/20 backdrop-blur-3xl border-slate-200 dark:border-slate-50/10 rounded-lg p-5">
+        <div ref={cardRef} className="flex gap-6 overflow-hidden border bg-white/50 dark:bg-slate-800/20 backdrop-blur-3xl border-slate-200 dark:border-slate-50/10 rounded-lg p-5">
+            <LightBall x={mousePos.x - cardX} y={mousePos.y - cardY} />
             <div className="bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-50/[0.06] rounded-md flex-none overflow-hidden w-52 h-52">
                 <img 
                     src={previewImage} 
