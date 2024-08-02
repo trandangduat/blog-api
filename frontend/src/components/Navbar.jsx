@@ -64,7 +64,7 @@ const NavItem = ({ link, label, onClick }) => {
         <div className="" onClick={onClick}>
             <Link 
                 to={link} 
-                className="block text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 px-4 py-0 rounded-xl font-semibold"
+                className="block text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 px-4 py-0 rounded-xl font-semibold"
             >
                 {label}
             </Link>

@@ -25,6 +25,6 @@ const App = () => {
   );
 }
 
-export const useMouseTracker = () => useContext(MouseTrackerContext);
+export const useMouseTracker = () => (useContext(MouseTrackerContext) || { x: 0, y: 0 });
 
 export default App

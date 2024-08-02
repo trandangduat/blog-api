@@ -7,7 +7,7 @@ import { LightBall } from "./components/LightBall";
 import { useMouseTracker } from "./App";
 
 const shortenText = (text) => {
-    const MAX_LENGTH = 200;
+    const MAX_LENGTH = 300;
     if (text.length > MAX_LENGTH) {
         text = text.slice(0, MAX_LENGTH) + "...";
     }
@@ -69,8 +69,8 @@ const PostCard = ({ title, date, previewBody, previewImage, url, commentsCount }
     const {x: cardX, y: cardY} = (cardRef.current ? cardRef.current.getBoundingClientRect() : {x: 0, y: 0});
     
     return (
-        <div ref={cardRef} className="flex gap-6 overflow-hidden border bg-white/50 dark:bg-slate-800/20 backdrop-blur-3xl border-slate-200 dark:border-slate-50/10 rounded-lg p-5">
-            <LightBall x={mousePos.x - cardX} y={mousePos.y - cardY} />
+        <div ref={cardRef} className="flex gap-6 overflow-hidden border bg-white/50 dark:bg-slate-800/20 hover:bg-slate-700/20 transition-colors duration-500 backdrop-blur-3xl border-slate-200 dark:border-slate-50/10 rounded-lg p-5">
+            <LightBall size="w-64" x={mousePos.x - cardX} y={mousePos.y - cardY} />
             <div className="bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-50/[0.06] rounded-md flex-none overflow-hidden w-52 h-52">
                 <img 
                     src={previewImage} 
@@ -85,7 +85,7 @@ const PostCard = ({ title, date, previewBody, previewImage, url, commentsCount }
                     </span>
                 </header>
                 <section>
-                    <h1 className="font-bold text-slate-900 dark:text-slate-200 my-4 hover:text-slate-700 dark:hover:text-slate-50">
+                    <h1 className="font-bold text-xl text-slate-900 dark:text-slate-200 my-4 hover:text-slate-700 dark:hover:text-slate-50">
                         <Link to={url}>{title}</Link>
                     </h1>
                     <p className="text-sm text-wrap text-slate-700 dark:text-slate-400 mb-4">
@@ -109,8 +109,8 @@ const PostCard = ({ title, date, previewBody, previewImage, url, commentsCount }
 
 const PostStatistic = ({ icon, count }) => {
     return (
-        <div className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold text-slate-700 dark:text-slate-300  bg-slate-200/50 dark:bg-slate-800">
-            <span className="size-5">{icon}</span>
+        <div className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold text-slate-700 dark:text-slate-300  bg-slate-200/50 dark:bg-gradient-to-tl from-slate-900 to-slate-800">
+            <span className="size-4">{icon}</span>
             <div className="">{count}</div>
         </div>
     );
