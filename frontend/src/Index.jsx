@@ -14,14 +14,10 @@ const shortenText = (text) => {
     return text;
 }
 
-const sanitizeContent = (html) => {
+const sanitizeContent = (markdown) => {
     const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
-    const firstImage = doc.body.querySelector('img');
-    return {
-        text: shortenText(doc.body.textContent) || "",
-        image: (firstImage ? firstImage.src : noImageSrc)
-    };
+    const doc = parser.parseFromString(markdown, 'text/html');
+    return shortenText(doc.body.textContent) || "";
 }
 
 export const Index = () => {
@@ -32,9 +28,7 @@ export const Index = () => {
             .then(data => {
                 const { all_posts } = data;
                 all_posts.map((post) => {
-                    const { text, image } = sanitizeContent(post.body);
-                    post.body = text;
-                    post.previewImage = image;
+                    post.body = sanitizeContent(post.body);
                     post.commentsCount = post.comments.length;
                     post.formattedDate = dayjs(post.date).format("MMM DD, YYYY");
                 });
@@ -52,7 +46,7 @@ export const Index = () => {
                             title={post.title}
                             date={post.formattedDate}
                             previewBody={post.body}
-                            previewImage={post.previewImage}
+                            previewImage={post.thumbnail || noImageSrc}
                             url={`/post/${post._id}`}
                             commentsCount={post.commentsCount}
                         />
@@ -75,8 +69,8 @@ const PostCard = ({ title, date, previewBody, previewImage, url, commentsCount }
                 <img
                     src={previewImage}
                     alt={title}
-                    className="object-center object-cover mx-auto"
-                ></img>
+                    className="w-full h-full object-cover object-center"
+                />
             </div>
             <div className="p-4">
                 <header className="text-sm">
