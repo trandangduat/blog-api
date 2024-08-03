@@ -73,3 +73,16 @@ exports.new_comment = [
         });
     }
 ];
+
+exports.delete_comment = [
+    async (req, res) => {
+        const comment = await Comment.findById(req.params.commentId).exec();
+        const post = await Post.findById(req.params.postId).exec();
+        post.comments.pull(comment);
+        await post.save();
+        await comment.deleteOne();
+        res.send({
+            msg: "COMMENT DELETED"
+        });
+    }
+];

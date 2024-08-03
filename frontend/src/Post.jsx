@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import {
@@ -13,6 +13,8 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 dayjs.extend(relativeTime);
+
+const PostContext = createContext(null);
 
 export const Post = () => {
     const { id: postId } = useParams();
@@ -123,17 +125,18 @@ export const Post = () => {
                     />
                 </div>
             </div>
-            <Drawer
-                isVisible={drawerVisibility}
-                setIsVisible={setDrawerVisibility}
-            >
-                <CommentSection
-                    commentsList={commentsList}
-                    commentValue={commentValue}
-                    setCommentValue={setCommentValue}
-                    handleCommentSubmit={handleCommentSubmit}
-                />
-            </Drawer>
+            <PostContext.Provider value={{postId, commentsList, setCommentsList}}>
+                <Drawer
+                    isVisible={drawerVisibility}
+                    setIsVisible={setDrawerVisibility}
+                >
+                    <CommentSection
+                        commentValue={commentValue}
+                        setCommentValue={setCommentValue}
+                        handleCommentSubmit={handleCommentSubmit}
+                    />
+                </Drawer>
+            </PostContext.Provider>
         </section>
     );
 };
@@ -184,7 +187,9 @@ const TOCHeading = ({ heading, setTOCPopupVisibility }) => {
     );
 }
 
-const CommentSection = ({ commentsList, commentValue, setCommentValue, handleCommentSubmit }) => {
+const CommentSection = ({ commentValue, setCommentValue, handleCommentSubmit }) => {
+    const { commentsList } = useContext(PostContext);
+
     return (
         <div className="h-full flex flex-col dark:text-slate-200">
             <h2 className="text-lg font-semibold p-4 border-b dark:border-slate-50/[0.06]">Comments</h2>
@@ -193,7 +198,8 @@ const CommentSection = ({ commentsList, commentValue, setCommentValue, handleCom
                     <div className="space-y-4">
                         {commentsList.map((cmt) => (
                             <Comment
-                                key={cmt.date}
+                                key={cmt._id}
+                                commentId={cmt._id}
                                 username={cmt.user.username}
                                 date={dayjs(cmt.date).fromNow()}
                                 body={cmt.body}
@@ -225,7 +231,25 @@ const CommentSection = ({ commentsList, commentValue, setCommentValue, handleCom
     );
 }
 
-const Comment = ({username, date, body}) => {
+const Comment = ({username, date, body, commentId}) => {
+    const { postId, setCommentsList } = useContext(PostContext);
+    const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+
+    const handleCommentDelete = (e) => {
+        e.preventDefault();
+        setCommentsList(comments => comments.filter(cmt => cmt._id !== commentId));
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+        }
+        fetch(`/api/post/${postId}/comment/${commentId}/delete`, options)
+            .then(response => response.json())
+            .then(response => {
+                console.log(response.msg);
+            });
+    };
     return (
         <div className="flex space-x-3">
             <div className="flex-shrink-0">
@@ -240,7 +264,26 @@ const Comment = ({username, date, body}) => {
                 <div className="mt-2 text-xs text-slate-500 space-x-4">
                     <button className="hover:text-slate-700 dark:hover:text-slate-300">Reply</button>
                     <button className="hover:text-slate-700 dark:hover:text-slate-300">Like</button>
+                    <button className="hover:text-slate-700 dark:hover:text-slate-300" onClick={() => setDeleteConfirmation(true)}>Delete</button>
                 </div>
+                {deleteConfirmation &&
+                    <DeleteConfirmation
+                        setDeleteConfirmation={setDeleteConfirmation}
+                        deleteComment={handleCommentDelete}
+                    />
+                }
+            </div>
+        </div>
+    );
+}
+
+const DeleteConfirmation = ({setDeleteConfirmation, deleteComment}) => {
+    return (
+        <div className="inline-flex text-sm gap-4 px-4 py-2 my-2 rounded-md bg-slate-100 dark:bg-slate-700/20">
+            <p>Are you sure you want to delete this comment?</p>
+            <div className="flex space-x-4">
+                <button className="text-slate-600 dark:text-slate-400 hover:underline" onClick={() => setDeleteConfirmation(false)}>No</button>
+                <button className="text-red-600 dark:text-red-400 font-bold hover:underline" onClick={deleteComment}>Yes</button>
             </div>
         </div>
     );
