@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "./AuthContext";
-import { 
-    ChatBubbleBottomCenterTextIcon, 
-    HeartIcon, 
-    Bars3BottomLeftIcon 
+import {
+    ChatBubbleBottomCenterTextIcon,
+    HeartIcon,
+    Bars3BottomLeftIcon
 } from "@heroicons/react/24/outline";
 import { Drawer } from "./components/Drawer";
 import { convertMarkdownToHTML, exportHeadingsFromMarkdown } from "./markdownUtils";
@@ -37,7 +37,7 @@ export const Post = () => {
     const toggleTOCPopup = (event) => {
         setTOCPopupVisibility(state => !state);
     }
-    
+
     useEffect(() => {
         fetch(`/api/post/${postId}`)
             .then(response => response.json())
@@ -85,16 +85,16 @@ export const Post = () => {
             <div className="flex justify-around">
                 <div className="w-auto z-10">
                     <aside className="flex flex-col gap-4 sticky top-32 text-slate-900">
-                        <SidebarItem 
+                        <SidebarItem
                             count={"TOC"}
                             icon={<Bars3BottomLeftIcon />}
                             onClick={toggleTOCPopup}
                         />
-                        <SidebarItem 
+                        <SidebarItem
                             count={420}
                             icon={<HeartIcon />}
                         />
-                        <SidebarItem 
+                        <SidebarItem
                             count={commentsList ? commentsList.length : 0}
                             icon={<ChatBubbleBottomCenterTextIcon />}
                             onClick={showDrawer}
@@ -165,13 +165,13 @@ const TOCHeading = ({ heading, setTOCPopupVisibility }) => {
         'ml-12',
     ];
     return (
-        <a 
+        <a
             href={heading.url}
             onClick={() => setTOCPopupVisibility(false)}
         >
-            <span 
+            <span
                 className={`
-                    block 
+                    block
                     font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100
                     px-4 py-1
                     ${heading.depth == 1 ? "" : "border-l-2 border-l-slate-200 dark:border-l-slate-50/[0.1]"}
@@ -192,7 +192,7 @@ const CommentSection = ({ commentsList, commentValue, setCommentValue, handleCom
                 {commentsList && (
                     <div className="space-y-4">
                         {commentsList.map((cmt) => (
-                            <Comment 
+                            <Comment
                                 key={cmt.date}
                                 username={cmt.user.username}
                                 date={dayjs(cmt.date).fromNow()}
@@ -204,8 +204,8 @@ const CommentSection = ({ commentsList, commentValue, setCommentValue, handleCom
             </div>
             <form onSubmit={handleCommentSubmit} className="border-t p-4 dark:border-slate-50/[0.06]">
                 <div className="flex items-center">
-                    <textarea 
-                        placeholder="Add a comment..." 
+                    <textarea
+                        placeholder="Add a comment..."
                         value={commentValue}
                         onChange={(event) => {
                             setCommentValue(event.target.value);
@@ -213,8 +213,8 @@ const CommentSection = ({ commentsList, commentValue, setCommentValue, handleCom
                         className="flex-1 resize-none rounded-lg py-2 px-4 focus:outline-none dark:bg-slate-800 focus:ring-2 focus:ring-sky-600 dark:focus:ring-sky-400"
                         rows="1"
                     />
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         className="ml-2 bg-sky-400/10 text-sky-600 dark:text-sky-400 hover:bg-sky-400/20 rounded-lg px-4 py-2 font-semibold focus:outline-none focus:ring-2 focus:ring-sky-400"
                     >
                         Post
@@ -248,7 +248,7 @@ const Comment = ({username, date, body}) => {
 
 const SidebarItem = ({ count, icon, onClick }) => {
     return (
-        <div onClick={onClick} className="flex flex-col items-center text-md py-4 px-6 cursor-pointer rounded-2xl font-semibold bg-sky-400/10 text-sky-600 dark:text-sky-400 hover:bg-sky-400/20">
+        <div onClick={onClick} className="flex flex-col items-center text-sm py-4 px-6 cursor-pointer rounded-xl font-semibold bg-sky-400/10 text-sky-600 dark:text-sky-400 hover:bg-sky-400/20">
             {icon}
             <div className="mt-1">{count}</div>
         </div>

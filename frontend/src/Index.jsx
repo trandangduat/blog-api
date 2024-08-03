@@ -47,7 +47,7 @@ export const Index = () => {
             {posts && (
                 <div className="flex flex-col gap-8">
                     {posts.map((post) => (
-                        <PostCard 
+                        <PostCard
                             key={post.date}
                             title={post.title}
                             date={post.formattedDate}
@@ -67,13 +67,13 @@ const PostCard = ({ title, date, previewBody, previewImage, url, commentsCount }
     const cardRef = useRef(null);
     const mousePos = useMouseTracker();
     const {x: cardX, y: cardY} = (cardRef.current ? cardRef.current.getBoundingClientRect() : {x: 0, y: 0});
-    
+
     return (
-        <div ref={cardRef} className="flex gap-6 overflow-hidden border bg-white/50 dark:bg-slate-800/20 hover:bg-slate-700/20 transition-colors duration-500 backdrop-blur-3xl border-slate-200 dark:border-slate-50/10 rounded-lg p-5">
+        <div ref={cardRef} className="flex gap-6 overflow-hidden border bg-white/50 dark:bg-slate-800/20 dark:hover:bg-slate-700/20 transition-colors duration-500 backdrop-blur-3xl border-slate-200 dark:border-slate-50/10 rounded-lg p-5">
             <LightBall size="w-64" x={mousePos.x - cardX} y={mousePos.y - cardY} />
             <div className="bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-50/[0.06] rounded-md flex-none overflow-hidden w-52 h-52">
-                <img 
-                    src={previewImage} 
+                <img
+                    src={previewImage}
                     alt={title}
                     className="object-center object-cover mx-auto"
                 ></img>
